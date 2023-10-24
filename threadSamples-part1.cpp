@@ -31,13 +31,13 @@ public:
         return _mutex;
     }
     
-    //this is version 2 of Acquire
+    //this is version 3 of Acquire
     // it requires the passed in lock parameter is the safe object itself
     //thus it avoids the issue that an arbitrary lock can access the resource.
-    template <class SafeT>
-    T& Acquire (unique_lock<SafeT>& lock)
+    //Also, it now requires the lock to be the same type of Safe that Acquire is.
+     T& Acquire (unique_lock<MutexSafe<T>>& lock)
     {
-        SafeT *_safe = lock.mutex();
+        MutexSafe<T> *_safe = lock.mutex();
         if(&_safe->Mutex()!=&_mutex)
         {
             throw "wrong lock object passed to Acquire function.\n";
