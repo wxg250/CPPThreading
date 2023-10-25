@@ -44,6 +44,15 @@ public:
         }
         return *_resource;
     }
+    //This overloaded Acquire allows unique_lock<mutex> to be passed in as a parameter
+    T& Acquire (unique_lock<mutex>& lock)
+    {
+        if(lock.mutex()!=&_mutex)
+        {
+            throw "wrong lock object passed to Acquire function.\n";
+        }
+        return *_resource;
+    }
 };
 void DannyWrite(string &blackboard)
 {
