@@ -72,7 +72,7 @@ public:
         _queue.push(msg);
         _deqCv.notify_one();
     }
-    MsgType& Dequeue()
+    MsgType Dequeue()
     {
         unique_lock<mutex> lock(_mutex);
         if(_queue.size()<=0)
